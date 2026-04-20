@@ -71,18 +71,27 @@
         }
 
         /* TOOLS & PALETTE */
-        #palette { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        #palette { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
         .tool-box { display: flex; flex-direction: column; gap: 8px; width: 100%; }
         
         .swatch { 
             width: 100%; 
             aspect-ratio: 1; 
-            border-radius: 6px; 
+            border-radius: 4px; /* Slightly sharper for a modern look */
             cursor: pointer; 
-            border: 2px solid transparent; 
-            transition: transform 0.1s; 
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.1s ease;
         }
-        .swatch.active { border-color: var(--text-main); transform: scale(1.1); }
+        
+        .swatch:hover {
+            transform: scale(1.15);
+            z-index: 2;
+        }
+        
+        .swatch.active { 
+            border: 2px solid var(--text-main); 
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
         
         /* CANVAS AREA */
         .canvas-area {
@@ -153,7 +162,7 @@
 <body>
 
     <div class="top-header">
-        <div class="header-logo">🎨 ColourPlay Studio</div>
+        <div class="header-logo">🎨 The Love Our Laughter ColorPlay Studio</div>
         <div style="display: flex; gap: 10px;">
             <button class="btn-reset" onclick="resetCanvas()">🗑️ Reset</button>
             <input type="file" id="upload" accept="image/*" style="display:none">

@@ -6,50 +6,49 @@
     <title>ColourPlay Studio</title>
     <style>
         :root { 
-            --primary: #6c5ce7; /* This is that signature Purple */
-            --bg: #f0f2f5;      /* The light grey background */
-            --accent: #00b894;  /* The "Save Art" Green */
-            --undo: #fab1a0;    /* The peach color for the Undo button */
-}
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+            /* Relaxing Adult Pastel Palette */
+            --primary: #a29bfe; /* Soft Lavender */
+            --bg: #f7f9fb;      /* Airy Off-White */
+            --accent: #81ecec;  /* Robin's Egg Blue */
+            --sidebar-bg: #ffffff;
+            --text-muted: #636e72;
+        }
+
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
         /* HEADER */
         .top-header { 
             width: 100%; 
             background: white; 
-            padding: 10px 20px; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+            padding: 12px 25px; 
+            box-shadow: 0 2px 15px rgba(0,0,0,0.03); 
             display: flex; 
             justify-content: space-between; 
             align-items: center;
             z-index: 10;
             box-sizing: border-box;
         }
-        .header-logo { 
-            font-weight: 800; 
-            color: var(--primary); 
-            font-size: 1.2rem; 
-            /* You could add: font-family: 'Georgia', serif; here */
-        }
+        .header-logo { font-weight: 300; color: var(--primary); font-size: 1.4rem; letter-spacing: 1.5px; text-transform: uppercase; }
+
         /* MAIN LAYOUT */
         .main-container { display: flex; flex: 1; overflow: hidden; }
 
         /* SIDEBARS */
         .sidebar {
-            width: 140px;
-            background: #ffffff;
-            border-right: 1px solid #ddd;
+            width: 150px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid #eee;
             display: flex;
             flex-direction: column;
-            padding: 20px 10px;
+            padding: 20px 12px;
             gap: 15px;
             overflow-y: auto;
         }
 
         .right-sidebar {
-            width: 120px;
-            background: #ffffff;
-            border-left: 1px solid #ddd;
+            width: 130px;
+            background: var(--sidebar-bg);
+            border-left: 1px solid #eee;
             display: flex;
             flex-direction: column;
             padding: 20px 10px;
@@ -61,8 +60,8 @@
         /* TOOLS & PALETTE */
         #palette { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .tool-box { display: flex; flex-direction: column; gap: 8px; width: 100%; }
-        .swatch { width: 30px; height: 30px; border-radius: 6px; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
-        .swatch.active { border-color: #333; transform: scale(1.1); }
+        .swatch { width: 32px; height: 32px; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
+        .swatch.active { border-color: #d1d8e0; transform: scale(1.1); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         
         /* CANVAS AREA */
         .canvas-area {
@@ -71,51 +70,62 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            background: #dfe6e9;
+            padding: 25px;
+            background: #f0f2f5;
             overflow: auto;
         }
         .canvas-container { 
             background: white; 
-            border-radius: 8px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            border-radius: 12px; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.06); 
             position: relative;
         }
-        canvas { cursor: crosshair; display: block; max-width: 100%; height: auto; border-radius: 8px; }
+        canvas { cursor: crosshair; display: block; max-width: 100%; height: auto; border-radius: 12px; }
 
         /* BUTTONS */
-        button { padding: 10px; border-radius: 8px; border: none; background: #f1f2f6; cursor: pointer; font-weight: 600; transition: 0.2s; }
-        button:hover { background: #e1e2e6; }
-        .tool-active { background: var(--primary) !important; color: white; }
-        .btn-save { background: var(--accent); color: white; }
-        .btn-undo { background: var(--undo); color: white; margin-top: 5px; }
-        .btn-undo:hover { background: #ff7675; }
-
-        /* TEMPLATE GALLERY (RIGHT SIDE) */
-        .gallery-title { font-size: 11px; font-weight: bold; color: #666; text-transform: uppercase; margin-bottom: 5px; text-align: center; }
-        .gallery-item { 
-            width: 80px; 
-            height: 80px; 
-            border-radius: 8px; 
+        button { 
+            padding: 12px; 
+            border-radius: 25px; /* Softer pill shape */
+            border: none; 
+            background: #f1f2f6; 
             cursor: pointer; 
-            border: 2px solid #eee; 
-            transition: 0.3s; 
+            font-weight: 500; 
+            font-size: 13px;
+            color: var(--text-muted);
+            transition: all 0.2s ease; 
+        }
+        button:hover { background: #e1e2e6; transform: translateY(-1px); }
+        .tool-active { background: var(--primary) !important; color: white; box-shadow: 0 4px 12px rgba(162, 155, 254, 0.3); }
+        
+        .btn-save { background: var(--accent); color: #2d3436; margin-left: 10px; }
+        .btn-save:hover { background: #74e5e5; }
+
+        /* TEMPLATE GALLERY */
+        .gallery-title { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 5px; letter-spacing: 1px; }
+        .gallery-item { 
+            width: 90px; 
+            height: 90px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            border: 2px solid #f1f2f6; 
+            transition: 0.3s ease; 
             object-fit: cover;
             background: white;
         }
         .gallery-item:hover { transform: scale(1.05); border-color: var(--primary); }
 
-        .slider-label { font-size: 11px; font-weight: bold; color: #666; }
+        .slider-label { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px; }
+        input[type="range"] { accent-color: var(--primary); }
     </style>
 </head>
 <body>
 
     <div class="top-header">
-        <div class="header-logo">🎨 The Love Our Laughter ColourPlay Studio</div>
-        <div style="display: flex; gap: 10px;">
+        <div class="header-logo">The Love Our Laughter ColourPlay Studio</div>
+        <div style="display: flex; align-items: center;">
             <button onclick="resetCanvas()">🗑️ Reset</button>
             <input type="file" id="upload" accept="image/*" style="display:none">
-            <button onclick="document.getElementById('upload').click()">📤 Upload</button>
+            <button style="margin-left:10px;" onclick="document.getElementById('upload').click()">📤 Upload</button>
             <button class="btn-save" onclick="downloadImage()">📥 Save Art</button>
         </div>
     </div>
@@ -124,21 +134,21 @@
         <div class="sidebar">
             <div class="slider-label">BRUSH SIZE</div>
             <input type="range" id="brushSize" min="1" max="50" value="8">
-            <hr style="width:100%; border:0; border-top:1px solid #eee;">
+            <hr style="width:100%; border:0; border-top:1px solid #f1f1f1;">
             
             <div class="slider-label">TOOLS</div>
             <div class="tool-box">
                 <button id="btn-brush" class="tool-active" onclick="setTool('brush')">🖌️ Brush</button>
                 <button id="btn-fill" onclick="setTool('fill')">🧺 Fill</button>
                 <button id="btn-erase" onclick="setTool('erase')">🧽 Erase</button>
-                <button class="btn-undo" onclick="undo()">↩️ Undo</button>
+                <button id="btn-undo" onclick="handleUndo()">↩️ Undo</button>
             </div>
             
-            <hr style="width:100%; border:0; border-top:1px solid #eee;">
+            <hr style="width:100%; border:0; border-top:1px solid #f1f1f1;">
             
             <div class="slider-label">PALETTE</div>
             <div id="palette"></div>
-            <input type="color" id="customColor" value="#6c5ce7" style="width:100%; height:40px; cursor:pointer; margin-top:10px;">
+            <input type="color" id="customColor" value="#a29bfe" style="width:100%; height:40px; cursor:pointer; margin-top:10px; border-radius:8px; border:1px solid #eee; background:none;">
         </div>
 
         <div class="canvas-area">
@@ -159,13 +169,14 @@
         const canvas = document.getElementById('paintCanvas');
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
         const brushSlider = document.getElementById('brushSize');
-        let currentColor = '#6c5ce7';
+        let currentColor = '#a29bfe';
         let currentTool = 'brush';
         let history = [];
         let isDrawing = false;
 
         const colors = ['#ff7675', '#fdcb6e', '#55efc4', '#81ecec', '#74b9ff', '#a29bfe', '#e17055', '#fab1a0', '#00b894', '#00cec9', '#0984e3', '#6c5ce7', '#d63031', '#e84393', '#2d3436', '#636e72', '#b2bec3', '#ffffff'];
         const palette = document.getElementById('palette');
+        
         colors.forEach(c => {
             const div = document.createElement('div');
             div.className = 'swatch' + (c === currentColor ? ' active' : '');
@@ -183,6 +194,23 @@
 
         document.getElementById('customColor').oninput = (e) => selectColor(e.target.value);
 
+        function setTool(tool) {
+            currentTool = tool;
+            document.querySelectorAll('.tool-box button').forEach(b => b.classList.remove('tool-active'));
+            const toolBtn = document.getElementById(`btn-${tool}`);
+            if (toolBtn) toolBtn.classList.add('tool-active');
+        }
+
+        function handleUndo() {
+            // briefly show active state for visual feedback
+            const originalTool = currentTool;
+            setTool('undo');
+            undo();
+            // Optional: Switch back to previous tool after a short delay
+            setTimeout(() => setTool(originalTool), 150);
+        }
+
+        // --- Core Drawing Logic ---
         function loadTemplate(src) {
             saveState();
             const img = new Image();
@@ -194,13 +222,6 @@
             img.src = src;
         }
 
-        function setTool(tool) {
-            currentTool = tool;
-            document.querySelectorAll('.tool-box button').forEach(b => b.classList.remove('tool-active'));
-            const toolBtn = document.getElementById(`btn-${tool}`);
-            if (toolBtn) toolBtn.classList.add('tool-active');
-        }
-
         canvas.onmousedown = (e) => {
             saveState();
             const rect = canvas.getBoundingClientRect();
@@ -209,7 +230,7 @@
             
             if (currentTool === 'fill') {
                 floodFill(Math.floor(x), Math.floor(y), currentColor);
-            } else {
+            } else if (currentTool !== 'undo') {
                 isDrawing = true;
                 draw(e);
             }

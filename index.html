@@ -101,11 +101,11 @@
 <body>
 
     <div class="top-header">
-        <button onclick="undo()">Undo</button>
-        <button onclick="resetCanvas()">Reset</button>
+        <button onclick="undo()">↩️ Undo</button>
+        <button onclick="resetCanvas()">🗑️ Reset</button>
         <input type="file" id="upload" accept="image/*" style="display:none">
-        <button class="btn-upload" onclick="document.getElementById('upload').click()">Upload</button>
-        <button class="btn-save" onclick="downloadImage()">Save Art</button>
+        <button class="btn-upload" onclick="document.getElementById('upload').click()">📤 Upload</button>
+        <button class="btn-save" onclick="downloadImage()">📥 Save Art</button>
     </div>
 
     <div class="main-container">
@@ -118,9 +118,9 @@
             
             <div style="font-weight: bold; font-size: 12px; color: #666;">TOOLS</div>
             <div class="tool-box">
-                <button id="btn-brush" class="tool-active">Brush</button>
-                <button id="btn-fill">Fill</button>
-                <button id="btn-erase">Erase</button>
+                <button id="btn-brush" class="tool-active">🖌️ Brush</button>
+                <button id="btn-fill">🧺 Fill</button>
+                <button id="btn-erase">🧽 Erase</button>
             </div>
         </div>
 
@@ -132,6 +132,7 @@
             <div class="gallery">
                 <img src="images/LoveYourself.png" onclick="loadTemplate(this.src)" title="Love Yourself First">
                 <img src="images/OldWays.png" onclick="loadTemplate(this.src)" title="Old Ways Won't Open New Doors">
+                <img src="images/Believe.png" onclick="loadTemplate(this.src)" title="You Become What You Believe">
             </div>
             
         </div>

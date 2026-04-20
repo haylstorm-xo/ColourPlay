@@ -1,0 +1,115 @@
+:root {
+    --bg-color: #f9f8f6;
+    --text-main: #2d2a26;
+    --accent-coral: #e85d4e;
+    --card-bg: #ffffff;
+    --border-light: #eceae7;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 5%;
+    align-items: center;
+}
+
+.logo { font-weight: bold; font-size: 1.2rem; }
+
+.nav-links a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.nav-links a.active { color: var(--text-main); font-weight: 600; }
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 80px 10%;
+}
+
+.subtitle {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: #a39e96;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-family: 'Lora', serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    margin: 10px 0;
+}
+
+.italic-accent {
+    font-style: italic;
+    color: var(--accent-coral);
+}
+
+.description {
+    max-width: 600px;
+    margin: 20px auto;
+    color: #6d6a66;
+}
+
+.btn-primary {
+    background-color: #2d2a26;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+/* Gallery Grid */
+.container { padding: 0 5% 50px; }
+
+.gallery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 1px solid var(--border-light);
+    padding-top: 40px;
+    margin-bottom: 30px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid var(--border-light);
+    position: relative;
+}
+
+.tag {
+    font-size: 0.6rem;
+    background: #f0f0f0;
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: #888;
+}
+
+.image-placeholder img {
+    width: 100%;
+    margin-top: 15px;
+    border-radius: 8px;
+}

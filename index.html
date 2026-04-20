@@ -327,6 +327,9 @@
             const startB = imageData.data[startPos + 2];
             const startA = imageData.data[startPos + 3];
 
+            // Tolerance level (0-255). 30-60 is usually the sweet spot for coloring pages.
+            const tolerance = 60; 
+
             // Avoid infinite loop if clicking same color
             if (matchColor(startR, startG, startB, startA, fillRGB.r, fillRGB.g, fillRGB.b, 255, 5)) return;
 

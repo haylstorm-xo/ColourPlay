@@ -7,10 +7,10 @@
     <style>
        :root { 
     /* Main Branding */
-    --primary: #a29bfe; 
-    --accent: #b8c994;  
-    --bg: #f7f9fb;      
-
+    --primary: #ff9999;  /* Light Salmon Pink */
+    --accent: #ffff99 /* Canary */
+    --bg: #f7f9fb;  
+           
     /* UI Surfaces */
     --surface: #ffffff;
     --border: #eeeeee;
@@ -21,7 +21,10 @@
     --text-light: #b2bec3;
 
     /* Functional */
-    --danger: #ff7675; 
+    --success: #55efc4 /* A soft mint for when an image is successfully saved */
+    --danger: #ff7675 /* A soft coral for the "Reset" or "Erase" buttons */
+    --warning: #fdcb6e /* A muted mustard for "Undo" or alerts */
+
 }
 
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
@@ -29,7 +32,8 @@
         /* HEADER */
         .top-header { 
             width: 100%; 
-            background: white; 
+            background: var(--surface); 
+            border-bottom: 1px solid var(--border); /* Replaces #eee */
             padding: 12px 25px; 
             box-shadow: 0 2px 15px rgba(0,0,0,0.03); 
             display: flex; 
@@ -46,8 +50,8 @@
         /* SIDEBARS */
         .sidebar {
             width: 150px;
-            background: var(--sidebar-bg);
-            border-right: 1px solid #eee;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             padding: 20px 12px;
@@ -57,8 +61,8 @@
 
         .right-sidebar {
             width: 130px;
-            background: var(--sidebar-bg);
-            border-left: 1px solid #eee;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             padding: 20px 10px;

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Coloring Book</title>
+    <style>
+        :root { --bg: #f0f2f5; --panel: #ffffff; }
+        body { font-family: sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; margin: 0; padding: 20px; }
+        .toolbar { background: var(--panel); padding: 15px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
+        canvas { background: white; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); cursor: crosshair; max-width: 100%; }
+        .color-palette { display: grid; grid-template-columns: repeat(5, 25px); gap: 5px; }
+        .swatch { width: 25px; height: 25px; border-radius: 4px; cursor: pointer; border: 2px solid transparent; }
+        .swatch.active { border-color: #333; }
+        button { padding: 8px 12px; border-radius: 6px; border: 1px solid #ddd; background: white; cursor: pointer; font-weight: bold; }
+        button:hover { background: #f9f9f9; }
+        .tool-active { background: #007bff; color: white; border-color: #0056b3; }
+    </style>
+</head>
+<body>
+
+    <div class="toolbar">
+        <input type="file" id="upload" accept="image/*" style="display:none">
+        <button onclick="document.getElementById('upload').click()">Upload Image</button>
+        
+        <div class="color-palette" id="palette"></div>
+        <input type="color" id="customColor" value="#ff0000">
+
+        <button id="btn-brush" class="tool-active">Brush</button>
+        <button id="btn-fill">Fill</button>
+        <button id="btn-erase">Erase</button>
+        <button onclick="undo()">Undo</button>
+        <button onclick="resetCanvas()">Reset</button>
+        <button onclick="downloadImage()" style="background: #28a745; color: white;">Download</button>
+    </div>
+
+    <canvas id="paintCanvas" width="800" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('paintCanvas');
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        let currentColor = '#ff0000';
+        let currentTool = 'brush';
+        let history = [];
+        let isDrawing = false;
+
+        // Initialize Palette
+        const colors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', '#000000', '#888888', '#FFFFFF', '#FFA500'];
+        colors.forEach(c => {
+            const div = document.createElement('div');
+            div.className = 'swatch';
+            div.style.backgroundColor = c;
+            div.onclick = () => { currentColor = c; document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active')); div.classList.add('active'); };
+            document.getElementById('palette').appendChild(div);
+        });
+
+        // Tool Selection
+        document.getElementById('btn-brush').onclick = () => setTool('brush');
+        document.getElementById('btn-fill').onclick = () => setTool('fill');
+        document.getElementById('btn-erase').onclick = () => setTool('erase');
+
+        function setTool(tool) {
+            currentTool = tool;
+            document.querySelectorAll('button').forEach(b => b.classList.remove('tool-active'));
+            document.getElementById(`btn-${tool}`).classList.add('tool-active');
+        }
+
+        // Drawing Logic
+        canvas.onmousedown = (e) => {
+            saveState();
+            if (currentTool === 'fill') {
+                floodFill(e.offsetX, e.offsetY, currentColor);
+            } else {
+                isDrawing = true;
+                draw(e);
+            }
+        };
+
+        window.onmouseup = () => { isDrawing = false; ctx.beginPath(); };
+        canvas.onmousemove = (e) => { if (isDrawing) draw(e); };
+
+        function draw(e) {
+            ctx.lineWidth = 10;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = currentTool === 'erase' ? '#white' : currentColor;
+            ctx.globalCompositeOperation = currentTool === 'erase' ? 'destination-out' : 'source-over';
+            
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+        }
+
+        // Flood Fill Algorithm (Simplified)
+        function floodFill(startX, startY, fillColor) {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const targetColor = getPixel(imageData, startX, startY);
+            const fillRGB = hexToRgb(fillColor);
+            
+            if (colorsMatch(targetColor, fillRGB)) return;
+
+            const pixelsToCheck = [startX, startY];
+            while (pixelsToCheck.length > 0) {
+                const y = pixelsToCheck.pop();
+                const x = pixelsToCheck.pop();
+                
+                const currentColor = getPixel(imageData, x, y);
+                if (colorsMatch(currentColor, targetColor)) {
+                    setPixel(imageData, x, y, fillRGB);
+                    if (x > 0) pixelsToCheck.push(x - 1, y);
+                    if (x < canvas.width - 1) pixelsToCheck.push(x + 1, y);
+                    if (y > 0) pixelsToCheck.push(x, y - 1);
+                    if (y < canvas.height - 1) pixelsToCheck.push(x, y + 1);
+                }
+            }
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        // Helpers for Fill
+        function getPixel(imgData, x, y) {
+            const i = (y * imgData.width + x) * 4;
+            return [imgData.data[i], imgData.data[i+1], imgData.data[i+2]];
+        }
+        function setPixel(imgData, x, y, color) {
+            const i = (y * imgData.width + x) * 4;
+            imgData.data[i] = color.r; imgData.data[i+1] = color.g; imgData.data[i+2] = color.b; imgData.data[i+3] = 255;
+        }
+        function colorsMatch(a, b) { return a[0] === b.r && a[1] === b.g && a[2] === b.b; }
+        function hexToRgb(hex) {
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : null;
+        }
+
+        // Upload Logic
+        document.getElementById('upload').onchange = (e) => {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const img = new Image();
+                img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        };
+
+        function saveState() { history.push(ctx.getImageData(0, 0, canvas.width, canvas.height)); if (history.length > 10) history.shift(); }
+        function undo() { if (history.length > 0) ctx.putImageData(history.pop(), 0, 0); }
+        function resetCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); history = []; }
+        function downloadImage() { const link = document.createElement('a'); link.download = 'my-coloring.png'; link.href = canvas.toDataURL(); link.click(); }
+    </script>
+</body>
+</html>

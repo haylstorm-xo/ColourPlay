@@ -28,7 +28,7 @@
             z-index: 10;
             box-sizing: border-box;
         }
-        .header-logo { font-weight: 300; color: var(--primary); font-size: 1.4rem; letter-spacing: 1.5px; text-transform: uppercase; }
+        .header-logo { font-weight: 300; color: var(--primary); font-size: 1.4rem; letter-spacing: 1.5px; text-transform: ; }
 
         /* MAIN LAYOUT */
         .main-container { display: flex; flex: 1; overflow: hidden; }
@@ -263,28 +263,49 @@
     }
        
         function floodFill(startX, startY, fillHex) {
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const startPos = (startY * canvas.width + startX) * 4;
-            const r = imageData.data[startPos], g = imageData.data[startPos+1], b = imageData.data[startPos+2], a = imageData.data[startPos+3];
-            const fillRGB = hexToRgb(fillHex);
-            if (r === fillRGB.r && g === fillRGB.g && b === fillRGB.b && a === 255) return;
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const startPos = (startY * canvas.width + startX) * 4;
+    
+    // Get the color we clicked on
+    const startR = imageData.data[startPos];
+    const startG = imageData.data[startPos + 1];
+    const startB = imageData.data[startPos + 2];
+    const startA = imageData.data[startPos + 3];
 
-            const stack = [[startX, startY]];
-            while(stack.length) {
-                const [x, y] = stack.pop();
-                const pos = (y * canvas.width + x) * 4;
-                if (x >= 0 && x < canvas.width && y >= 0 && y < canvas.height && 
-                    imageData.data[pos] === r && imageData.data[pos+1] === g && 
-                    imageData.data[pos+2] === b && imageData.data[pos+3] === a) {
-                    imageData.data[pos] = fillRGB.r;
-                    imageData.data[pos+1] = fillRGB.g;
-                    imageData.data[pos+2] = fillRGB.b;
-                    imageData.data[pos+3] = 255;
-                    stack.push([x+1, y], [x-1, y], [x, y+1], [x, y-1]);
-                }
-            }
-            ctx.putImageData(imageData, 0, 0);
+    const fillRGB = hexToRgb(fillHex);
+    
+    // Tolerance level (0-255). 30-60 is usually the sweet spot for coloring pages.
+    const tolerance = 60; 
+
+    if (matchColor(startR, startG, startB, startA, fillRGB.r, fillRGB.g, fillRGB.b, 255, 10)) return;
+
+    const stack = [[startX, startY]];
+    
+    while (stack.length) {
+        const [x, y] = stack.pop();
+        const pos = (y * canvas.width + x) * 4;
+
+        if (x >= 0 && x < canvas.width && y >= 0 && y < canvas.height && 
+            matchColor(imageData.data[pos], imageData.data[pos+1], imageData.data[pos+2], imageData.data[pos+3], startR, startG, startB, startA, tolerance)) {
+            
+            imageData.data[pos] = fillRGB.r;
+            imageData.data[pos + 1] = fillRGB.g;
+            imageData.data[pos + 2] = fillRGB.b;
+            imageData.data[pos + 3] = 255;
+
+            stack.push([x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]);
         }
+    }
+    ctx.putImageData(imageData, 0, 0);
+}
+
+// Helper function to check if colors are "close enough"
+function matchColor(r1, g1, b1, a1, r2, g2, b2, a2, tolerance) {
+    return Math.abs(r1 - r2) <= tolerance &&
+           Math.abs(g1 - g2) <= tolerance &&
+           Math.abs(b1 - b2) <= tolerance &&
+           Math.abs(a1 - a2) <= tolerance;
+}
 
         function hexToRgb(hex) {
             const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);

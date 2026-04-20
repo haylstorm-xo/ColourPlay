@@ -8,6 +8,7 @@
         :root { --primary: #6c5ce7; --bg: #f0f2f5; --accent: #00b894; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
+        /* HEADER */
         .top-header { 
             width: 100%; 
             background: white; 
@@ -19,11 +20,12 @@
             z-index: 10;
             box-sizing: border-box;
         }
-
         .header-logo { font-weight: 800; color: var(--primary); font-size: 1.2rem; }
 
+        /* MAIN LAYOUT */
         .main-container { display: flex; flex: 1; overflow: hidden; }
 
+        /* SIDEBARS */
         .sidebar {
             width: 140px;
             background: #ffffff;
@@ -31,54 +33,68 @@
             display: flex;
             flex-direction: column;
             padding: 20px 10px;
-            gap: 20px;
+            gap: 15px;
             overflow-y: auto;
         }
 
-        #palette { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 8px; 
+        .right-sidebar {
+            width: 120px;
+            background: #ffffff;
+            border-left: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 10px;
+            gap: 15px;
+            align-items: center;
+            overflow-y: auto;
         }
 
+        /* TOOLS & PALETTE */
+        #palette { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .tool-box { display: flex; flex-direction: column; gap: 8px; width: 100%; }
-
+        .swatch { width: 30px; height: 30px; border-radius: 6px; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
+        .swatch.active { border-color: #333; transform: scale(1.1); }
+        
+        /* CANVAS AREA */
         .canvas-area {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             padding: 20px;
-            overflow: auto;
             background: #dfe6e9;
+            overflow: auto;
         }
-
         .canvas-container { 
             background: white; 
             border-radius: 8px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
             position: relative;
-            margin-bottom: 20px;
         }
-
         canvas { cursor: crosshair; display: block; max-width: 100%; height: auto; border-radius: 8px; }
 
-        .swatch { width: 30px; height: 30px; border-radius: 6px; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
-        .swatch.active { border-color: #333; transform: scale(1.1); box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        
-        button { padding: 10px; border-radius: 8px; border: none; background: #f1f2f6; cursor: pointer; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        /* BUTTONS */
+        button { padding: 10px; border-radius: 8px; border: none; background: #f1f2f6; cursor: pointer; font-weight: 600; transition: 0.2s; }
         button:hover { background: #e1e2e6; }
         .tool-active { background: var(--primary) !important; color: white; }
-
         .btn-save { background: var(--accent); color: white; }
-        .btn-save:hover { background: #00a383; }
 
-        .gallery { display: flex; gap: 15px; padding: 10px; background: rgba(255,255,255,0.5); border-radius: 12px; }
-        .gallery img { width: 60px; height: 60px; border-radius: 8px; cursor: pointer; border: 2px solid white; transition: 0.3s; object-fit: cover; }
-        .gallery img:hover { transform: translateY(-5px); border-color: var(--primary); }
+        /* TEMPLATE GALLERY (RIGHT SIDE) */
+        .gallery-title { font-size: 11px; font-weight: bold; color: #666; text-transform: uppercase; margin-bottom: 5px; text-align: center; }
+        .gallery-item { 
+            width: 80px; 
+            height: 80px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            border: 2px solid #eee; 
+            transition: 0.3s; 
+            object-fit: cover;
+            background: white;
+        }
+        .gallery-item:hover { transform: scale(1.05); border-color: var(--primary); }
 
-        .slider-label { font-size: 11px; font-weight: bold; color: #666; margin-top: 5px; }
-        input[type="range"] { width: 100%; cursor: pointer; }
+        .slider-label { font-size: 11px; font-weight: bold; color: #666; }
     </style>
 </head>
 <body>
@@ -98,18 +114,14 @@
         <div class="sidebar">
             <div class="slider-label">BRUSH SIZE</div>
             <input type="range" id="brushSize" min="1" max="50" value="8">
-            
             <hr style="width:100%; border:0; border-top:1px solid #eee;">
-            
             <div class="slider-label">TOOLS</div>
             <div class="tool-box">
                 <button id="btn-brush" class="tool-active" onclick="setTool('brush')">🖌️ Brush</button>
                 <button id="btn-fill" onclick="setTool('fill')">🧺 Fill</button>
                 <button id="btn-erase" onclick="setTool('erase')">🧽 Erase</button>
             </div>
-
             <hr style="width:100%; border:0; border-top:1px solid #eee;">
-
             <div class="slider-label">PALETTE</div>
             <div id="palette"></div>
             <input type="color" id="customColor" value="#6c5ce7" style="width:100%; height:40px; cursor:pointer; margin-top:10px;">
@@ -119,13 +131,14 @@
             <div class="canvas-container">
                 <canvas id="paintCanvas" width="800" height="800"></canvas>
             </div>
-            
-            <div class="gallery">
-                <img src="images/LoveYourself.png" onclick="loadTemplate(this.src)" alt="Love Yourself">
-                <img src="images/OldWays.png" onclick="loadTemplate(this.src)" alt="Old Ways">
-                <img src="images/Believe.png" onclick="loadTemplate(this.src)" alt="Believe">
-            </div>
         </div>
+
+        <div class="right-sidebar">
+            <div class="gallery-title">Templates</div>
+            <img class="gallery-item" src="images/LoveYourself.png" onclick="loadTemplate(this.src)" alt="Love Yourself">
+            <img class="gallery-item" src="images/OldWays.png" onclick="loadTemplate(this.src)" alt="Old Ways">
+            <img class="gallery-item" src="images/Believe.png" onclick="loadTemplate(this.src)" alt="Believe">
+            </div>
     </div>
 
     <script>
@@ -137,12 +150,8 @@
         let history = [];
         let isDrawing = false;
 
-        const colors = [
-            '#ff7675', '#fdcb6e', '#55efc4', '#81ecec', '#74b9ff', '#a29bfe',
-            '#e17055', '#fab1a0', '#00b894', '#00cec9', '#0984e3', '#6c5ce7',
-            '#d63031', '#e84393', '#2d3436', '#636e72', '#b2bec3', '#ffffff'
-        ];
-
+        // Initialize Palette
+        const colors = ['#ff7675', '#fdcb6e', '#55efc4', '#81ecec', '#74b9ff', '#a29bfe', '#e17055', '#fab1a0', '#00b894', '#00cec9', '#0984e3', '#6c5ce7', '#d63031', '#e84393', '#2d3436', '#636e72', '#b2bec3', '#ffffff'];
         const palette = document.getElementById('palette');
         colors.forEach(c => {
             const div = document.createElement('div');
@@ -166,6 +175,7 @@
             const img = new Image();
             img.onload = () => {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.globalCompositeOperation = 'source-over'; // Reset blend mode for new template
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
             };
             img.src = src;
@@ -177,11 +187,15 @@
             document.getElementById(`btn-${tool}`).classList.add('tool-active');
         }
 
+        // DRAWING LOGIC
         canvas.onmousedown = (e) => {
             saveState();
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+            const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+            
             if (currentTool === 'fill') {
-                const rect = canvas.getBoundingClientRect();
-                floodFill(Math.floor(e.clientX - rect.left), Math.floor(e.clientY - rect.top), currentColor);
+                floodFill(Math.floor(x), Math.floor(y), currentColor);
             } else {
                 isDrawing = true;
                 draw(e);
@@ -193,8 +207,8 @@
 
         function draw(e) {
             const rect = canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+            const y = (e.clientY - rect.top) * (canvas.height / rect.height);
 
             ctx.lineWidth = brushSlider.value;
             ctx.lineCap = 'round';
@@ -203,7 +217,6 @@
             if (currentTool === 'erase') {
                 ctx.globalCompositeOperation = 'destination-out';
             } else {
-                // 'multiply' allows you to color under black lines
                 ctx.globalCompositeOperation = 'multiply';
                 ctx.strokeStyle = currentColor;
             }
@@ -214,12 +227,10 @@
             ctx.moveTo(x, y);
         }
 
-        // Flood Fill Logic
         function floodFill(startX, startY, fillHex) {
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const startPos = (startY * canvas.width + startX) * 4;
             const r = imageData.data[startPos], g = imageData.data[startPos+1], b = imageData.data[startPos+2], a = imageData.data[startPos+3];
-            
             const fillRGB = hexToRgb(fillHex);
             if (r === fillRGB.r && g === fillRGB.g && b === fillRGB.b && a === 255) return;
 
@@ -230,12 +241,10 @@
                 if (x >= 0 && x < canvas.width && y >= 0 && y < canvas.height && 
                     imageData.data[pos] === r && imageData.data[pos+1] === g && 
                     imageData.data[pos+2] === b && imageData.data[pos+3] === a) {
-                    
                     imageData.data[pos] = fillRGB.r;
                     imageData.data[pos+1] = fillRGB.g;
                     imageData.data[pos+2] = fillRGB.b;
                     imageData.data[pos+3] = 255;
-
                     stack.push([x+1, y], [x-1, y], [x, y+1], [x, y-1]);
                 }
             }
@@ -253,20 +262,14 @@
         }
 
         function undo() { if (history.length > 0) ctx.putImageData(history.pop(), 0, 0); }
-        
-        function resetCanvas() { 
-            saveState();
-            ctx.clearRect(0, 0, canvas.width, canvas.height); 
-        }
-
+        function resetCanvas() { saveState(); ctx.clearRect(0, 0, canvas.width, canvas.height); }
         function downloadImage() { 
             const link = document.createElement('a');
-            link.download = 'my-masterpiece.png';
+            link.download = 'my-art.png';
             link.href = canvas.toDataURL();
             link.click();
         }
 
-        // Handle File Uploads
         document.getElementById('upload').onchange = (e) => {
             const reader = new FileReader();
             reader.onload = (event) => {

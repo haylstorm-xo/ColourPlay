@@ -71,7 +71,13 @@
         }
 
         /* TOOLS & PALETTE */
-        #palette { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+        #palette { 
+    display: grid; 
+    /* 7 colors per row looks very balanced in a sidebar */
+    grid-template-columns: repeat(7, 1fr); 
+    gap: 4px; 
+    margin-bottom: 10px;
+}
         .tool-box { display: flex; flex-direction: column; gap: 8px; width: 100%; }
         
         .swatch { 

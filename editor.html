@@ -47,13 +47,16 @@
         .main-container { display: flex; flex: 1; overflow: hidden; }
 
         /* SIDEBARS */
-        <div class="slider-label">PALETTE</div>
-<div id="palette"></div>
-
-<div class="custom-color-container">
-    <input type="color" id="customColor" value="#ff9999">
-    <span class="custom-label">Custom Color</span>
-</div>
+        .sidebar {
+            width: 160px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 20px 15px;
+            gap: 20px;
+            overflow-y: auto;
+        }
 
         .right-sidebar {
             width: 140px;
@@ -68,57 +71,27 @@
         }
 
         /* TOOLS & PALETTE */
-       #palette { 
-    display: grid; 
-    grid-template-columns: repeat(3, 1fr);
-    gap: 5px; 
-    margin-bottom: 15px;
-}
-
-.swatch { 
-    width: 100%; 
-    aspect-ratio: 1; 
-    border-radius: 50%; /* Circular swatches look great for a "studio" feel */
-    cursor: pointer; 
-    border: 1px solid rgba(0,0,0,0.1);
-    transition: transform 0.2s;
-}
-
-.swatch.active { 
-    transform: scale(1.2); 
-    border: 2px solid var(--text-main);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-}
-
-/* Make the custom color picker look like a discrete tool, not a big box */
-.custom-color-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding-top: 10px;
-    border-top: 1px solid var(--border);
-}
-
-#customColor {
-    width: 30px;
-    height: 30px;
-    padding: 0;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    background: none;
-    overflow: hidden;
-}
-
-#customColor::-webkit-color-swatch-wrapper { padding: 0; }
-#customColor::-webkit-color-swatch { border: none; border-radius: 50%; }
-
-.custom-label {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--text-muted);
-    text-transform: uppercase;
-}
+        #palette { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+        .tool-box { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+        
+        .swatch { 
+            width: 100%; 
+            aspect-ratio: 1; 
+            border-radius: 4px; /* Slightly sharper for a modern look */
+            cursor: pointer; 
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.1s ease;
+        }
+        
+        .swatch:hover {
+            transform: scale(1.15);
+            z-index: 2;
+        }
+        
+        .swatch.active { 
+            border: 2px solid var(--text-main); 
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
         
         /* CANVAS AREA */
         .canvas-area {

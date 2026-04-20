@@ -71,26 +71,45 @@
         }
 
         /* TOOLS & PALETTE */
-        #palette { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
-        .tool-box { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+        #palette { 
+            display: grid; 
+            /* Force exactly 3 columns */
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 10px; 
+            /* Centers the grid within the sidebar */
+            justify-items: center; 
+            margin: 10px 0;
+        }
         
         .swatch { 
-            width: 100%; 
-            aspect-ratio: 1; 
-            border-radius: 4px; /* Slightly sharper for a modern look */
+            /* Adjust these values to make them smaller/larger */
+            width: 24px; 
+            height: 24px; 
+            
+            border-radius: 50%; 
             cursor: pointer; 
-            border: 1px solid rgba(0,0,0,0.05);
-            transition: all 0.1s ease;
+            border: 1px solid rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
         }
         
         .swatch:hover {
-            transform: scale(1.15);
-            z-index: 2;
+            transform: scale(1.1);
         }
         
         .swatch.active { 
-            border: 2px solid var(--text-main); 
-            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+            transform: scale(1.2); 
+            border: 2px solid var(--text-main);
+            box-shadow: 0 0 0 2px white, 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        /* Optional: Adjust the custom color picker to align with the 3-column width */
+        .custom-color-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
         }
         
         /* CANVAS AREA */

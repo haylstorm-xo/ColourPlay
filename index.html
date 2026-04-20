@@ -3,12 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro-Coloring Studio</title>
+    <title>ColourPlay Studio</title>
     <style>
         :root { --primary: #6c5ce7; --bg: #f0f2f5; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; display: flex; flex-direction: column; align-items: center; padding-bottom: 40px; }
         
         .header { width: 100%; background: white; padding: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; position: sticky; top: 0; z-index: 10; }
+
+        #palette { 
+        display: grid; 
+        grid-template-columns: repeat(9, 1fr); /* 9 colors per row */
+        gap: 5px; 
+        margin-right: 10px;
+        }
         
         .canvas-container { margin: 20px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); line-height: 0; overflow: hidden; }
         canvas { cursor: crosshair; max-width: 95vw; background-color: white; }
@@ -33,7 +40,7 @@
         <input type="color" id="customColor" style="width:35px; height:35px; border:none; cursor:pointer;">
         
         <button id="btn-brush" class="tool-active">🖌️ Brush</button>
-        <button id="btn-fill">🪣 Fill</button>
+        <button id="btn-fill"> Fill</button>
         <button id="btn-erase">🧽 Erase</button>
         <button onclick="undo()">↩️ Undo</button>
         <button onclick="resetCanvas()">🗑️ Reset</button>
@@ -51,7 +58,7 @@
     <div class="gallery-label">Pick a Template:</div>
     <div class="gallery">
     <img src="images/OldWays.png" onclick="loadTemplate(this.src)" title="Old Ways Won't Open New Doors">
-    <img src="images/LoveYourself.jpg" onclick="loadTemplate(this.src)" title="Love Yourself First">
+    <img src="images/LoveYourself.png" onclick="loadTemplate(this.src)" title="Love Yourself First">
     </div>
 
     <script>
@@ -63,7 +70,12 @@
         let isDrawing = false;
 
         // Colors
-        const colors = ['#ff7675', '#fdcb6e', '#55efc4', '#81ecec', '#74b9ff', '#a29bfe', '#2d3436', '#ffffff'];
+        // A larger, curated palette
+        const colors = [
+            '#ff7675', '#fdcb6e', '#55efc4', '#81ecec', '#74b9ff', '#a29bfe', // Pastels
+            '#e17055', '#fab1a0', '#00b894', '#00cec9', '#0984e3', '#6c5ce7', // Vibrants
+            '#d63031', '#e84393', '#2d3436', '#636e72', '#b2bec3', '#ffffff'  // Darks/Neutrals
+        ];
         const palette = document.getElementById('palette');
         colors.forEach(c => {
             const div = document.createElement('div');
@@ -81,7 +93,7 @@
         function loadTemplate(src) {
             saveState();
             const img = new Image();
-            img.crossOrigin = "anonymous";
+            // img.crossOrigin = "anonymous"; // Delete or comment out this line for local GitHub images
             img.onload = () => {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);

@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ColourPlay Studio</title>
     <style>
-        :root { --primary: #6c5ce7; --bg: #f0f2f5; --accent: #00b894; --undo: #fab1a0; }
+        :root { 
+            --primary: #6c5ce7; /* This is that signature Purple */
+            --bg: #f0f2f5;      /* The light grey background */
+            --accent: #00b894;  /* The "Save Art" Green */
+            --undo: #fab1a0;    /* The peach color for the Undo button */
+}
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
         /* HEADER */
@@ -20,8 +25,12 @@
             z-index: 10;
             box-sizing: border-box;
         }
-        .header-logo { font-weight: 800; color: var(--primary); font-size: 1.2rem; }
-
+        .header-logo { 
+            font-weight: 800; 
+            color: var(--primary); 
+            font-size: 1.2rem; 
+            /* You could add: font-family: 'Georgia', serif; here */
+        }
         /* MAIN LAYOUT */
         .main-container { display: flex; flex: 1; overflow: hidden; }
 

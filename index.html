@@ -83,12 +83,12 @@
         #palette { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .tool-box { display: flex; flex-direction: column; gap: 8px; width: 100%; }
         .swatch { 
-            width: 35px; 
-            height: 35px; 
-            border-radius: 8px; 
+            width: 40px; 
+            height: 40px; 
+            border-radius: 10px; 
             cursor: pointer; 
-            border: 2px solid transparent; 
-            transition: all 0.2s; 
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
         }
         .swatch.active { border-color: var(--text-muted); transform: scale(1.1); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         

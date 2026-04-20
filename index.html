@@ -60,7 +60,7 @@
         /* TOOLS & PALETTE */
         #palette { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .tool-box { display: flex; flex-direction: column; gap: 8px; width: 100%; }
-        .swatch { width: 32px; height: 32px; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
+        .swatch { width: 32px; height: 32px; border-radius: 8px; cursor: pointer; border: 1px solid rgba(0,0,0,0.05);; transition: 0.2s; }
         .swatch.active { border-color: #d1d8e0; transform: scale(1.1); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         
         /* CANVAS AREA */
@@ -121,7 +121,7 @@
 <body>
 
     <div class="top-header">
-        <div class="header-logo">The Love Our Laughter ColourPlay Studio</div>
+        <div class="header-logo">🎨 The Love Our Laughter ColourPlay Studio</div>
         <div style="display: flex; align-items: center;">
             <button onclick="resetCanvas()">🗑️ Reset</button>
             <input type="file" id="upload" accept="image/*" style="display:none">
@@ -167,7 +167,7 @@
 
     <script>
         const canvas = document.getElementById('paintCanvas');
-        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        const ctx = canvas.getContext('2d', { willReadFrequently: true }); ctx.fillStyle = 'white'; ctx.fillRect(0, 0, canvas.width, canvas.height);
         const brushSlider = document.getElementById('brushSize');
         let currentColor = '#a29bfe';
         let currentTool = 'brush';
@@ -247,20 +247,21 @@
             ctx.lineWidth = brushSlider.value;
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
-            
+    
             if (currentTool === 'erase') {
                 ctx.globalCompositeOperation = 'destination-out';
             } else {
+                /* 'multiply' is the magic for coloring books! It keeps the black lines black but lets the color fill the white spaces. */
                 ctx.globalCompositeOperation = 'multiply';
                 ctx.strokeStyle = currentColor;
             }
 
-            ctx.lineTo(x, y);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-        }
-
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+    }
+       
         function floodFill(startX, startY, fillHex) {
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const startPos = (startY * canvas.width + startX) * 4;

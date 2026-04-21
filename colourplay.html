@@ -411,25 +411,37 @@
         
             const fillColor = hexToRgb(fillHex);
             const targetColor = getPixel(imageData, startX, startY);
-        
+            
+            // 1. Prevent crash: If the color clicked is already the fill color, STOP.
             if (colorsMatch(targetColor, [fillColor.r, fillColor.g, fillColor.b, 255], 2)) return;
         
             const stack = [[startX, startY]];
             
+            // Use a TypedArray to keep track of visited pixels (much faster than a list)
+            const visited = new Uint8Array(width * height);
+
             while (stack.length > 0) {
                 const [x, y] = stack.pop();
-                const offset = (y * width + x) * 4;
-        
-                if (colorsMatch(getPixel(imageData, x, y), targetColor, 120)) {
+                
+                if (x < 0 || x >= width || y < 0 || y >= height) continue;
+
+                const pos = y * width + x;
+                if (visited[pos]) continue; // Skip if already processed
+
+                if (colorsMatch(getPixel(imageData, x, y), targetColor, 80)) { // 80 is a good tolerance for templates
+                    const offset = pos * 4;
                     data[offset] = fillColor.r;
                     data[offset + 1] = fillColor.g;
                     data[offset + 2] = fillColor.b;
                     data[offset + 3] = 255;
-        
-                    if (x > 0) stack.push([x - 1, y]);
-                    if (x < width - 1) stack.push([x + 1, y]);
-                    if (y > 0) stack.push([x, y - 1]);
-                    if (y < height - 1) stack.push([x, y + 1]);
+                    
+                    visited[pos] = 1; // Mark as visited
+
+                    // Add neighbors
+                    stack.push([x + 1, y]);
+                    stack.push([x - 1, y]);
+                    stack.push([x, y + 1]);
+                    stack.push([x, y - 1]);
                 }
             }
             ctx.putImageData(imageData, 0, 0);

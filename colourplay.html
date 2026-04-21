@@ -8,8 +8,8 @@
         :root { 
             /* Main Branding */
             --primary: #ff9999;  /* Light Salmon Pink */
-            --accent: #ffff99 /* Canary */
-            --bg: #f7f9fb;  
+            --accent: #ffff99;   /* Canary */
+            --bg: #f7f9fb;      
                    
             /* UI Surfaces */
             --surface: #ffffff;
@@ -21,10 +21,9 @@
             --text-light: #b2bec3;
         
             /* Functional */
-            --success: #55efc4 /* A soft mint for when an image is successfully saved */
-            --danger: #ff7675 /* A soft coral for the "Reset" or "Erase" buttons */
-            --warning: #fdcb6e /* A muted mustard for "Undo" or alerts */
-
+            --success: #55efc4; 
+            --danger: #ff7675; 
+            --warning: #fdcb6e; 
         }
 
         body { 
@@ -43,7 +42,7 @@
             width: 100%; 
             background: var(--surface); 
             border-bottom: 1px solid var(--border); 
-            padding: 10px 20px; 
+            padding: 10px 25px; 
             box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
             display: flex; 
             justify-content: space-between; 
@@ -58,18 +57,18 @@
 
         /* SIDEBARS */
         .sidebar {
-            width: 150px;
+            width: 160px; /* Slightly wider to accommodate button text */
             background: var(--surface);
             border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             padding: 20px 15px;
-            gap: 20px;
+            gap: 25px;
             overflow-y: auto;
         }
 
         .right-sidebar {
-            width: 140px;
+            width: 130px;
             background: var(--surface);
             border-left: 1px solid var(--border);
             display: flex;
@@ -80,46 +79,29 @@
             overflow-y: auto;
         }
 
-        /* TOOLS & PALETTE */
+        /* PALETTE GRID */
         #palette { 
             display: grid; 
-            /* Force exactly 3 columns */
             grid-template-columns: repeat(3, 1fr); 
-            gap: 10px; 
-            /* Centers the grid within the sidebar */
+            gap: 8px; 
             justify-items: center; 
             margin: 10px 0;
         }
         
         .swatch { 
-            /* Adjust these values to make them smaller/larger */
-            width: 32px; 
-            height: 32px; 
-            
+            width: 30px; 
+            height: 30px; 
             border-radius: 50%; 
             cursor: pointer; 
             border: 1px solid rgba(0,0,0,0.1);
             transition: all 0.2s ease;
         }
         
-        .swatch:hover {
-            transform: scale(1.1);
-        }
-        
+        .swatch:hover { transform: scale(1.1); }
         .swatch.active { 
             transform: scale(1.2); 
             border: 2px solid var(--text-main);
             box-shadow: 0 0 0 2px white, 0 2px 8px rgba(0,0,0,0.2);
-        }
-        
-        /* Optional: Adjust the custom color picker to align with the 3-column width */
-        .custom-color-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            padding-top: 15px;
-            border-top: 1px solid var(--border);
         }
         
         /* CANVAS AREA */
@@ -136,90 +118,99 @@
             background: white; 
             border-radius: 8px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
-            line-height: 0; /* Removes bottom whitespace */
+            line-height: 0;
         }
         canvas { 
             max-width: 100%; 
             max-height: 80vh; 
             border-radius: 8px; 
-            touch-action: none; /* Prevents scrolling while drawing */
+            touch-action: none;
+            cursor: crosshair;
         }
 
-        /* BUTTONS */
+        /* BUTTON STYLING */
+        .btn-group { display: flex; gap: 8px; align-items: center; }
+
         button { 
-            padding: 12px; 
-            border-radius: 25px; /* Softer pill shape */
+            padding: 8px 16px; 
+            border-radius: 20px; 
             border: none; 
             background: #f1f2f6; 
             cursor: pointer; 
-            font-weight: 500; 
+            font-weight: 600; 
             font-size: 13px;
             color: var(--text-muted);
-            transition: all 0.2s ease; 
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
         button:hover { background: #e1e2e6; transform: translateY(-1px); }
-        .tool-active { background: var(--primary) !important; color: white; box-shadow: 0 4px 12px rgba(162, 155, 254, 0.3); }
         
-        .btn-save { background: var(--accent); color: ; margin-left: 10px; }
-        .btn-save:hover { filter: brightness(0.9); /* This makes it slightly darker on hover automatically! */ }
-        
+        .sidebar button { width: 100%; padding: 10px; }
+
         .tool-active { 
             background: var(--primary) !important; 
             color: white !important; 
-            border-color: var(--primary) !important;
+            box-shadow: 0 4px 12px rgba(255, 153, 153, 0.3); 
         }
         
-        .btn-save { background: var(--success); color: white; border: none; }
-        .btn-reset { color: var(--danger); }
+        .btn-save { background: var(--success); color: white; }
+        .btn-upload { background: #a29bfe; color: white; }
+        .btn-reset { background: #f1f2f6; color: var(--danger); }
 
         /* GALLERY */
-        .gallery-title { font-size: 10px; font-weight: 800; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
+        .gallery-title { font-size: 10px; font-weight: 800; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
         .gallery-item { 
-            width: 100px; 
-            height: 100px; 
+            width: 90px; 
+            height: 90px; 
             border-radius: 8px; 
             cursor: pointer; 
             border: 2px solid var(--border); 
             object-fit: cover;
             background: white;
+            transition: 0.2s;
         }
-        .gallery-item:hover { border-color: var(--primary); }
+        .gallery-item:hover { border-color: var(--primary); transform: scale(1.05); }
 
-        .slider-label { font-size: 11px; font-weight: 700; color: var(--text-muted); }
-        input[type="range"] { width: 100%; accent-color: var(--primary); }
+        .slider-label { font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; margin-bottom: 8px; display: block; }
+        input[type="range"] { width: 100%; accent-color: var(--primary); margin-top: 5px; }
+
+        .tool-section { width: 100%; display: flex; flex-direction: column; gap: 10px; }
     </style>
 </head>
 <body>
 
     <div class="top-header">
         <div class="header-logo">🎨 The Love Our Laughter ColorPlay Studio</div>
-        <div style="display: flex; gap: 10px;">
+        <div class="btn-group">
             <button class="btn-reset" onclick="resetCanvas()">🗑️ Reset</button>
             <input type="file" id="upload" accept="image/*" style="display:none">
-            <button onclick="document.getElementById('upload').click()">📤 Upload</button>
+            <button class="btn-upload" onclick="document.getElementById('upload').click()">📤 Upload</button>
             <button class="btn-save" onclick="downloadImage()">📥 Save Art</button>
         </div>
     </div>
 
     <div class="main-container">
         <div class="sidebar">
-            <div>
-                <div class="slider-label">BRUSH SIZE</div>
+            <div class="tool-section">
+                <span class="slider-label">Brush Size</span>
                 <input type="range" id="brushSize" min="1" max="50" value="8">
             </div>
             
-            <div class="tool-box">
-                <div class="slider-label">TOOLS</div>
+            <div class="tool-section">
+                <span class="slider-label">Tools</span>
                 <button id="btn-brush" class="tool-active" onclick="setTool('brush')">🖌️ Brush</button>
                 <button id="btn-fill" onclick="setTool('fill')">🧺 Fill</button>
                 <button id="btn-erase" onclick="setTool('erase')">🧽 Erase</button>
                 <button onclick="undo()">↩️ Undo</button>
             </div>
             
-            <div class="tool-box">
-                <div class="slider-label">PALETTE</div>
+            <div class="tool-section">
+                <span class="slider-label">Palette</span>
                 <div id="palette"></div>
-                <input type="color" id="customColor" value="#ff9999" style="width:100%; height:40px; border-radius:5px; border:1px solid var(--border); background:none; cursor:pointer;">
+                <input type="color" id="customColor" value="#ff9999" style="width:100%; height:35px; border-radius:8px; border:1px solid var(--border); background:none; cursor:pointer; padding: 0;">
             </div>
         </div>
 
@@ -245,7 +236,7 @@
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
         const brushSlider = document.getElementById('brushSize');
         
-        let currentColor = '#ff7675';
+        let currentColor = '#e74c3c';
         let currentTool = 'brush';
         let history = [];
         let isDrawing = false;
@@ -254,37 +245,13 @@
         ctx.fillStyle = 'white';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // A curated 21-color palette: 7 Rainbow, 7 Pastels, 7 Earthy Neutrals
         const colors = [
-            // --- Row 1: The Rainbow (Vibrant) ---
-            '#e74c3c', // Red
-            '#e67e22', // Orange
-            '#f1c40f', // Yellow
-            '#2ecc71', // Green
-            '#3498db', // Blue
-            '#9b59b6', // Purple
-            '#e84393', // Pink
-        
-            // --- Row 2: The Pastels (Soft) ---
-            '#ffadad', // Pastel Red/Pink
-            '#ffd6a5', // Pastel Orange
-            '#fdffb6', // Pastel Yellow
-            '#caffbf', // Pastel Green
-            '#9bf6ff', // Pastel Blue
-            '#a2d2ff', // Sky Blue
-            '#bdb2ff', // Lavender
-        
-            // --- Row 3: The Neutrals (Earth & Stone) ---
-            '#f5ebe0', // Sand / Light Cream
-            '#e3d5ca', // Soft Beige
-            '#d5bdaf', // Warm Tan
-            '#8d99ae', // Slate Grey
-            '#4a4e69', // Deep Muted Purple
-            '#2d3436', // Charcoal (Better than pure black)
-            '#636e72'  // Stone Grey
+            '#e74c3c', '#e67e22', '#f1c40f', '#2ecc71', '#3498db', '#9b59b6', '#e84393',
+            '#ffadad', '#ffd6a5', '#fdffb6', '#caffbf', '#9bf6ff', '#a2d2ff', '#bdb2ff',
+            '#f5ebe0', '#e3d5ca', '#d5bdaf', '#8d99ae', '#4a4e69', '#2d3436', '#636e72'
         ];
-        const palette = document.getElementById('palette');
         
+        const palette = document.getElementById('palette');
         colors.forEach(c => {
             const div = document.createElement('div');
             div.className = 'swatch' + (c === currentColor ? ' active' : '');
@@ -304,12 +271,11 @@
 
         function setTool(tool) {
             currentTool = tool;
-            document.querySelectorAll('.tool-box button').forEach(b => b.classList.remove('tool-active'));
+            document.querySelectorAll('.tool-section button').forEach(b => b.classList.remove('tool-active'));
             document.getElementById(`btn-${tool}`).classList.add('tool-active');
             
-            // Cursor Feedback
-            if(tool === 'erase') canvas.style.cursor = 'pointer';
-            else if(tool === 'fill') canvas.style.cursor = 'cell'; // Or a bucket icon
+            if(tool === 'erase') canvas.style.cursor = 'help';
+            else if(tool === 'fill') canvas.style.cursor = 'cell';
             else canvas.style.cursor = 'crosshair';
         }
 
@@ -332,10 +298,8 @@
 
         function getMousePos(e) {
             const rect = canvas.getBoundingClientRect();
-            // Handle both touch and mouse
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            
             return {
                 x: (clientX - rect.left) * (canvas.width / rect.width),
                 y: (clientY - rect.top) * (canvas.height / rect.height)
@@ -345,7 +309,6 @@
         function startDrawing(e) {
             saveState();
             const pos = getMousePos(e);
-            
             if (currentTool === 'fill') {
                 floodFill(Math.floor(pos.x), Math.floor(pos.y), currentColor);
             } else {
@@ -357,7 +320,6 @@
         function draw(e) {
             if (!isDrawing) return;
             const pos = getMousePos(e);
-
             ctx.lineWidth = brushSlider.value;
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
@@ -365,7 +327,7 @@
             if (currentTool === 'erase') {
                 ctx.globalCompositeOperation = 'destination-out';
             } else {
-                ctx.globalCompositeOperation = 'multiply';
+                ctx.globalCompositeOperation = 'source-over'; // Changed to source-over for cleaner colors
                 ctx.strokeStyle = currentColor;
             }
 
@@ -380,12 +342,9 @@
             ctx.beginPath();
         }
 
-        // Event Listeners
         canvas.addEventListener('mousedown', startDrawing);
         canvas.addEventListener('mousemove', draw);
         window.addEventListener('mouseup', stopDrawing);
-
-        // Touch Support
         canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e); });
         canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); });
         canvas.addEventListener('touchend', stopDrawing);
@@ -396,7 +355,6 @@
             img.crossOrigin = "anonymous"; 
             img.onload = () => {
                 ctx.globalCompositeOperation = 'source-over';
-                // Scale image to fit canvas while maintaining aspect ratio
                 const ratio = Math.min(canvas.width / img.width, canvas.height / img.height);
                 const x = (canvas.width - img.width * ratio) / 2;
                 const y = (canvas.height - img.height * ratio) / 2;
@@ -413,40 +371,24 @@
             const width = imageData.width;
             const height = imageData.height;
             const data = imageData.data;
-        
             const fillColor = hexToRgb(fillHex);
             const targetColor = getPixel(imageData, startX, startY);
-            
-            // 1. Prevent crash: If the color clicked is already the fill color, STOP.
             if (colorsMatch(targetColor, [fillColor.r, fillColor.g, fillColor.b, 255], 2)) return;
-        
             const stack = [[startX, startY]];
-            
-            // Use a TypedArray to keep track of visited pixels (much faster than a list)
             const visited = new Uint8Array(width * height);
-
             while (stack.length > 0) {
                 const [x, y] = stack.pop();
-                
                 if (x < 0 || x >= width || y < 0 || y >= height) continue;
-
                 const pos = y * width + x;
-                if (visited[pos]) continue; // Skip if already processed
-
-                if (colorsMatch(getPixel(imageData, x, y), targetColor, 80)) { // 80 is a good tolerance for templates
+                if (visited[pos]) continue;
+                if (colorsMatch(getPixel(imageData, x, y), targetColor, 80)) {
                     const offset = pos * 4;
                     data[offset] = fillColor.r;
                     data[offset + 1] = fillColor.g;
                     data[offset + 2] = fillColor.b;
                     data[offset + 3] = 255;
-                    
-                    visited[pos] = 1; // Mark as visited
-
-                    // Add neighbors
-                    stack.push([x + 1, y]);
-                    stack.push([x - 1, y]);
-                    stack.push([x, y + 1]);
-                    stack.push([x, y - 1]);
+                    visited[pos] = 1;
+                    stack.push([x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]);
                 }
             }
             ctx.putImageData(imageData, 0, 0);
@@ -454,36 +396,16 @@
 
         function getPixel(imageData, x, y) {
             const index = (y * imageData.width + x) * 4;
-            return [
-                imageData.data[index],
-                imageData.data[index + 1],
-                imageData.data[index + 2],
-                imageData.data[index + 3]
-            ];
-        }
-
-        function setPixel(imageData, x, y, color) {
-            const index = (y * imageData.width + x) * 4;
-            imageData.data[index] = color.r;
-            imageData.data[index + 1] = color.g;
-            imageData.data[index + 2] = color.b;
-            imageData.data[index + 3] = 255;
+            return [imageData.data[index], imageData.data[index + 1], imageData.data[index + 2], imageData.data[index + 3]];
         }
 
         function colorsMatch(c1, c2, tolerance) {
-            return Math.abs(c1[0] - c2[0]) <= tolerance &&
-                   Math.abs(c1[1] - c2[1]) <= tolerance &&
-                   Math.abs(c1[2] - c2[2]) <= tolerance &&
-                   Math.abs(c1[3] - c2[3]) <= tolerance;
+            return Math.abs(c1[0] - c2[0]) <= tolerance && Math.abs(c1[1] - c2[1]) <= tolerance && Math.abs(c1[2] - c2[2]) <= tolerance;
         }
 
         function hexToRgb(hex) {
             const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            return result ? {
-                r: parseInt(result[1], 16),
-                g: parseInt(result[2], 16),
-                b: parseInt(result[3], 16)
-            } : null;
+            return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : null;
         }
 
         function downloadImage() {
@@ -492,14 +414,6 @@
             link.href = canvas.toDataURL('image/png');
             link.click();
         }
-
-        document.getElementById('upload').onchange = (e) => {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                loadTemplate(event.target.result);
-            };
-            reader.readAsDataURL(e.target.files[0]);
-        };
     </script>
 </body>
 </html>

@@ -31,13 +31,13 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(247, 249, 251, 0.98); /* Matches your --bg color but mostly solid */
+            width: 100vw;
+            height: 100vh;
+            background: #f7f9fb; /* Matches your --bg color */
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 2000; /* High z-index to stay on top */
+            z-index: 9999; /* Higher than everything else */
             transition: opacity 0.5s ease;
         }
         
@@ -45,8 +45,14 @@
             text-align: center;
             max-width: 600px;
             padding: 40px;
+            animation: fadeIn 1s ease-in;
         }
         
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+                
         .overlay h1 {
             font-family: 'Georgia', serif;
             font-size: 3rem;
@@ -97,16 +103,6 @@
             overflow: hidden; 
             color: var(--text-main);
         }
-
-        /* OVERLAY */
-        <div id="welcome-overlay" class="overlay">
-            <div class="overlay-content">
-                <p class="subtitle">A QUIET LITTLE COLOURING BOOK</p>
-                <h1>Colour your way <br><span class="italic-text">in the margins</span> of the day.</h1>
-                <p class="description">Upload line art, pick up a brush, and make something small and beautiful. No downloads, no clutter — just the page and the colours.</p>
-                <button class="btn-start" onclick="closeOverlay()">Get started</button>
-            </div>
-        </div>
         
         /* HEADER */
         .top-header { 
@@ -293,6 +289,15 @@
     </style>
 </head>
 <body>
+    /* OVERLAY */
+        <div id="welcome-overlay" class="overlay">
+            <div class="overlay-content">
+                <p class="subtitle">A QUIET LITTLE COLOURING BOOK</p>
+                <h1>Colour your way <br><span class="italic-text">in the margins</span> of the day.</h1>
+                <p class="description">Choose line art or upload your own. Pick up a brush, and make something and beautiful. No downloads, no clutter — just the page and the colours.</p>
+                <button class="btn-start" onclick="closeOverlay()">Get started</button>
+            </div>
+        </div>
 
     <div class="top-header">
         <div class="header-logo">🎨 The Love Our Laughter ColorPlay Studio</div>

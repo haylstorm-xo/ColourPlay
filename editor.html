@@ -137,7 +137,7 @@
 
         /* BUTTONS */
         button { 
-            width: 100%;             /* Fills the sidebar width */
+            width: 50%;             /* Fills the sidebar width */
             min-height: 45px;        /* Forces all buttons to the same height */
             padding: 5px 15px; 
             border-radius: 25px; 
@@ -304,7 +304,7 @@
             
             // Cursor Feedback
             if(tool === 'erase') canvas.style.cursor = 'pointer';
-            else if(tool === 'fill') canvas.style.cursor = 'precision'; // Or a bucket icon
+            else if(tool === 'fill') canvas.style.cursor = 'cell'; // Or a bucket icon
             else canvas.style.cursor = 'crosshair';
         }
 

@@ -325,7 +325,7 @@
         </div>
 
     <div class="top-header">
-        <div class="header-logo">🎨 The Love Our Laughter ColorPlay Studio</div>
+        <div class="header-logo">🎨 The Love Our Laughter ColourPlay Studio</div>
         <div class="btn-group">
             <button class="btn-reset" onclick="resetCanvas()">🗑️ Reset</button>
             <input type="file" id="upload" accept="image/*" style="display:none">
@@ -427,16 +427,31 @@
         });
 
         const zoomSlider = document.getElementById('zoomLevel');
-zoomSlider.oninput = (e) => {
-    const scale = e.target.value;
-    canvas.style.transformOrigin = '0 0'; // Zoom from top-left
-    canvas.style.transform = `scale(${scale})`;
-    
-    // Adjust the container to handle the new "visual" size
-    canvas.parentElement.style.width = (canvas.width * scale) + 'px';
-    canvas.parentElement.style.height = (canvas.height * scale) + 'px';
-};
+            zoomSlider.oninput = (e) => {
+                const scale = e.target.value;
+                canvas.style.transformOrigin = '0 0'; // Zoom from top-left
+                canvas.style.transform = `scale(${scale})`;
+                
+                // Adjust the container to handle the new "visual" size
+                canvas.parentElement.style.width = (canvas.width * scale) + 'px';
+                canvas.parentElement.style.height = (canvas.height * scale) + 'px';
+            };
 
+        // This "listens" for when you actually select a file
+        document.getElementById('upload').onchange = function(e) {
+            const reader = new FileReader();
+            
+            reader.onload = function(event) {
+                // We reuse your existing loadTemplate logic to keep things clean!
+                loadTemplate(event.target.result);
+            };
+            
+            // Read the file you just picked
+            if (e.target.files[0]) {
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        };
+                
         function selectColor(color, element) {
             currentColor = color;
             document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));

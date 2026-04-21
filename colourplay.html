@@ -148,7 +148,19 @@
         }
         button:hover { background: #e1e2e6; transform: translateY(-1px); }
         
-        .sidebar button { width: 100%; padding: 10px; }
+        .sidebar button { 
+            width: 100%; 
+            padding: 10px 5px; 
+            display: flex; 
+            flex-direction: column; /* Stack emoji over text */
+            align-items: center; 
+            gap: 4px;
+            font-size: 11px; /* Slightly smaller text for the grid */
+        }
+        
+        /* Make the Undo button span both columns if you want it wider, 
+           or leave it as is to keep it small! */
+        .btn-undo { grid-column: span 1; }
 
         .tool-active { 
             background: var(--primary) !important; 
@@ -177,7 +189,13 @@
         .slider-label { font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; margin-bottom: 8px; display: block; }
         input[type="range"] { width: 100%; accent-color: var(--primary); margin-top: 5px; }
 
-        .tool-section { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+        /* Updated Tool Grid */
+        .tool-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 8px; 
+            width: 100%; 
+        }
     </style>
 </head>
 <body>
@@ -201,10 +219,12 @@
             
             <div class="tool-section">
                 <span class="slider-label">Tools</span>
-                <button id="btn-brush" class="tool-active" onclick="setTool('brush')">🖌️ Brush</button>
-                <button id="btn-fill" onclick="setTool('fill')">🧺 Fill</button>
-                <button id="btn-erase" onclick="setTool('erase')">🧽 Erase</button>
-                <button onclick="undo()">↩️ Undo</button>
+                <div class="tool-grid">
+                    <button id="btn-fill" onclick="setTool('fill')"><span>🧺</span> Fill</button>
+                    <button id="btn-brush" class="tool-active" onclick="setTool('brush')"><span>🖌️</span> Brush</button>
+                    <button id="btn-erase" onclick="setTool('erase')"><span>🧽</span> Erase</button>
+                    <button class="btn-undo" onclick="undo()"><span>↩️</span> Undo</button>
+                </div>
             </div>
             
             <div class="tool-section">

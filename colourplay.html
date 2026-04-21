@@ -165,11 +165,11 @@
         .tool-active { 
             background: var(--primary) !important; 
             color: white !important; 
-            box-shadow: 0 4px 12px rgba(255, 153, 153, 0.3); 
+            box-shadow: 0 4px 12px rgba(163, 153, 255, 0.4); /* Matches your Lavender-Blue */
         }
         
         .btn-save { background: var(--success); color: white; }
-        .btn-upload { background: #a29bfe; color: white; }
+        .btn-upload { background: var(--accent); color: white; }
         .btn-reset { 
             background: #fff; 
             color: var(--danger); 
@@ -245,7 +245,7 @@
                 <div class="tool-grid">
                     <button id="btn-fill" onclick="setTool('fill')"><span>🧺</span> Fill</button>
                     <button id="btn-brush" class="tool-active" onclick="setTool('brush')"><span>🖌️</span> Brush</button>
-                    <button id="btn-eraser" onclick="setTool('erase')"><span>🧽</span> Eraser</button>
+                    <button id="btn-erase" onclick="setTool('erase')"><span>🧽</span> Eraser</button>
                     <button class="btn-undo" onclick="undo()"><span>↩️</span> Undo</button>
                 </div>
             </div>

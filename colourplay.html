@@ -170,7 +170,16 @@
         
         .btn-save { background: var(--success); color: white; }
         .btn-upload { background: #a29bfe; color: white; }
-        .btn-reset { background: #f1f2f6; color: var(--danger); }
+        .btn-reset { 
+            background: #fff; 
+            color: var(--danger); 
+            border: 1px solid var(--danger); 
+        }
+
+        .btn-reset:hover { 
+            background: var(--danger); 
+            color: white; 
+        }
 
         /* GALLERY */
         /* Updated Labels for better readability */
@@ -236,7 +245,7 @@
                 <div class="tool-grid">
                     <button id="btn-fill" onclick="setTool('fill')"><span>🧺</span> Fill</button>
                     <button id="btn-brush" class="tool-active" onclick="setTool('brush')"><span>🖌️</span> Brush</button>
-                    <button id="btn-erase" onclick="setTool('erase')"><span>🧽</span> Erase</button>
+                    <button id="btn-eraser" onclick="setTool('erase')"><span>🧽</span> Eraser</button>
                     <button class="btn-undo" onclick="undo()"><span>↩️</span> Undo</button>
                 </div>
             </div>
@@ -325,11 +334,15 @@
         }
 
         function resetCanvas() {
-            saveState();
-            ctx.fillStyle = 'white';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // This pops up a standard browser warning box
+            const confirmReset = confirm("Are you sure you want to clear your masterpiece? This cannot be undone!");
+            
+            if (confirmReset) {
+                saveState(); // Keeps a backup in your undo history just in case!
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
         }
-
         function getMousePos(e) {
             const rect = canvas.getBoundingClientRect();
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;

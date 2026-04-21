@@ -309,7 +309,7 @@
         }
 
         function saveState() {
-            if (history.length > 30) history.shift();
+            if (history.length > 15) history.shift();
             history.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
         }
 

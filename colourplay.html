@@ -420,7 +420,7 @@
                 const [x, y] = stack.pop();
                 const offset = (y * width + x) * 4;
         
-                if (colorsMatch(getPixel(imageData, x, y), targetColor, 30)) {
+                if (colorsMatch(getPixel(imageData, x, y), targetColor, 120)) {
                     data[offset] = fillColor.r;
                     data[offset + 1] = fillColor.g;
                     data[offset + 2] = fillColor.b;

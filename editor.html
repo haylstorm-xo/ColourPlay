@@ -137,18 +137,24 @@
 
         /* BUTTONS */
         button { 
-            padding: 15px; 
-            border-radius: 20px; 
-            border: 1px solid var(--border); 
-            background: var(--surface); 
+            width: 100%;             /* Fills the sidebar width */
+            min-height: 45px;        /* Forces all buttons to the same height */
+            padding: 5px 15px; 
+            border-radius: 25px; 
+            border: none; 
+            background: #f1f2f6; 
             cursor: pointer; 
-            font-weight: 600; 
-            font-size: 12px;
-            transition: all 0.2s; 
+            font-weight: 500; 
+            font-size: 13px;
+            color: var(--text-muted);
+            transition: all 0.2s ease; 
+            
+            /* Ensures emoji and text stay centered */
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 8px;
+            box-sizing: border-box; /* Crucial: includes padding in the width */
         }
         button:hover { background: #f8f9fa; border-color: var(--text-light); }
         

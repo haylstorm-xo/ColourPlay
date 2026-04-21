@@ -137,7 +137,7 @@
 
         /* BUTTONS */
         button { 
-            padding: 10px 15px; 
+            padding: 15px; 
             border-radius: 20px; 
             border: 1px solid var(--border); 
             background: var(--surface); 
@@ -297,8 +297,8 @@
             document.getElementById(`btn-${tool}`).classList.add('tool-active');
             
             // Cursor Feedback
-            if(tool === 'erase') canvas.style.cursor = 'cell';
-            else if(tool === 'fill') canvas.style.cursor = 'not-allowed'; // Or a bucket icon
+            if(tool === 'erase') canvas.style.cursor = 'pointer';
+            else if(tool === 'fill') canvas.style.cursor = 'precision'; // Or a bucket icon
             else canvas.style.cursor = 'crosshair';
         }
 

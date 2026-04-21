@@ -6,15 +6,25 @@
     <title>ColourPlay Studio</title>
     <style>
         :root { 
-            --primary: #ff9999;  
-            --accent: #ffff99; 
+            /* Main Branding */
+            --primary: #ff9999;  /* Light Salmon Pink */
+            --accent: #ffff99 /* Canary */
             --bg: #f7f9fb;  
+                   
+            /* UI Surfaces */
             --surface: #ffffff;
             --border: #eeeeee;
+        
+            /* Text Hierarchy */
             --text-main: #2d3436;
             --text-muted: #636e72;
-            --danger: #ff7675;
-            --success: #55efc4;
+            --text-light: #b2bec3;
+        
+            /* Functional */
+            --success: #55efc4 /* A soft mint for when an image is successfully saved */
+            --danger: #ff7675 /* A soft coral for the "Reset" or "Erase" buttons */
+            --warning: #fdcb6e /* A muted mustard for "Undo" or alerts */
+
         }
 
         body { 
@@ -137,10 +147,8 @@
 
         /* BUTTONS */
         button { 
-            width: 75%;             /* Fills the sidebar width */
-            min-height: 45px;        /* Forces all buttons to the same height */
-            padding: 5px 15px; 
-            border-radius: 25px; 
+            padding: 12px; 
+            border-radius: 25px; /* Softer pill shape */
             border: none; 
             background: #f1f2f6; 
             cursor: pointer; 
@@ -148,15 +156,12 @@
             font-size: 13px;
             color: var(--text-muted);
             transition: all 0.2s ease; 
-            
-            /* Ensures emoji and text stay centered */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            box-sizing: border-box; /* Crucial: includes padding in the width */
         }
-        button:hover { background: #f8f9fa; border-color: var(--text-light); }
+        button:hover { background: #e1e2e6; transform: translateY(-1px); }
+        .tool-active { background: var(--primary) !important; color: white; box-shadow: 0 4px 12px rgba(162, 155, 254, 0.3); }
+        
+        .btn-save { background: var(--accent); color: ; margin-left: 10px; }
+        .btn-save:hover { filter: brightness(0.9); /* This makes it slightly darker on hover automatically! */ }
         
         .tool-active { 
             background: var(--primary) !important; 

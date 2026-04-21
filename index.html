@@ -31,29 +31,52 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #f7f9fb;
+    width: 100%;
+    height: 100%;
+    /* This makes the background a semi-transparent version of your theme blue */
+    background: rgba(217, 233, 249, 0.85); 
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    transition: opacity 0.5s ease, visibility 0.5s ease; /* Added visibility transition */
-    opacity: 1;           /* Force it to be visible on load */
-    visibility: visible;   /* Force it to be visible on load */
+    transition: opacity 0.5s ease, visibility 0.5s ease;
 }
-        
-        .overlay-content {
-            text-align: center;
-            max-width: 600px;
-            padding: 40px;
-            animation: fadeIn 1s ease-in;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+
+.overlay-content {
+    background: white;
+    text-align: center;
+    max-width: 500px; /* Slimmer for a "pop-up" feel */
+    padding: 50px;
+    border-radius: 40px; /* Soft, rounded corners */
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1); /* Floating effect */
+    animation: fadeIn 0.8s ease-out;
+    
+    /* Center the button and elements inside */
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+/* THEMED START BUTTON */
+.btn-start {
+    background: var(--primary); /* Uses your light blue theme color */
+    color: white;
+    padding: 16px 45px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(153, 204, 255, 0.4);
+    margin-top: 10px;
+}
+
+.btn-start:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(153, 204, 255, 0.6);
+    filter: brightness(1.05);
+}
                 
         .overlay h1 {
             font-family: 'Georgia', serif;

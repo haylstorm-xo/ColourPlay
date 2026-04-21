@@ -184,6 +184,25 @@
             display: block; 
         }
 
+        /* GALLERY ITEM STYLING */
+        .gallery-item { 
+            width: 80px;      /* Slightly smaller to fit the sidebar better */
+            height: 80px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            border: 2px solid var(--border); 
+            object-fit: cover;
+            background: white;
+            transition: all 0.3s ease;
+            margin-bottom: 8px; /* Spacing so they don't touch */
+        }
+        
+        .gallery-item:hover { 
+            border-color: var(--primary); 
+            transform: scale(1.08); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
         /* Updated Tool Grid */
         .tool-grid { 
             display: grid; 

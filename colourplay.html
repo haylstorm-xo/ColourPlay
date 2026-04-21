@@ -173,21 +173,16 @@
         .btn-reset { background: #f1f2f6; color: var(--danger); }
 
         /* GALLERY */
-        .gallery-title { font-size: 10px; font-weight: 800; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-        .gallery-item { 
-            width: 90px; 
-            height: 90px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            border: 2px solid var(--border); 
-            object-fit: cover;
-            background: white;
-            transition: 0.2s;
+        /* Updated Labels for better readability */
+        .slider-label, .gallery-title { 
+            font-size: 13px; /* Increased from 11px */
+            font-weight: 700; 
+            color: var(--text-muted); /* Using a slightly darker gray for better contrast */
+            text-transform: uppercase; 
+            letter-spacing: 1.2px; 
+            margin-bottom: 10px; 
+            display: block; 
         }
-        .gallery-item:hover { border-color: var(--primary); transform: scale(1.05); }
-
-        .slider-label { font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; margin-bottom: 8px; display: block; }
-        input[type="range"] { width: 100%; accent-color: var(--accent); margin-top: 5px; }
 
         /* Updated Tool Grid */
         .tool-grid { 
